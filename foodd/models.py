@@ -16,6 +16,8 @@ class AbstractIngredient(models.Model):
     dimensionality = models.IntegerField(choices=DIMENSIONS)
     details        = models.TextField(null=True)
 
+    def __str__(self): return name
+
 class Package(models.Model):
     ingredient = models.ForeignKey(AbstractIngredient)
     name       = models.CharField(max_length=255)
@@ -24,10 +26,14 @@ class Package(models.Model):
     tareamount = models.FloatField()
     details    = models.TextField(null=True)
 
+    def __str__(self): return name
+
 class Stock(models.Model):
     package   = models.ForeignKey(Package)
     remaining = models.FloatField()
     expiry    = models.DateField(null=True)
+
+    def __str__(self): return name
 
 class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(AbstractIngredient)
