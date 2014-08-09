@@ -11,10 +11,10 @@ DIMENSIONS = (
 
 class AbstractIngredient(models.Model):
     name           = models.CharField(max_length=255)
-    provides       = models.ManyToManyField("self", null=True)
-    properties     = models.ManyToManyField(Property)
+    provides       = models.ManyToManyField("self", null=True, blank=True)
+    properties     = models.ManyToManyField(Property, blank=True)
     dimensionality = models.IntegerField(choices=DIMENSIONS)
-    details        = models.TextField(null=True)
+    details        = models.TextField(blank=True)
 
     def __str__(self): return self.name
 
@@ -23,8 +23,8 @@ class Package(models.Model):
     name       = models.CharField(max_length=255)
     uid        = models.IntegerField()
     netamount  = models.FloatField()
-    tareamount = models.FloatField()
-    details    = models.TextField(null=True)
+    tareamount = models.FloatField(blank=True, default=0)
+    details    = models.TextField(blank=True)
 
     def __str__(self): return self.name
 
