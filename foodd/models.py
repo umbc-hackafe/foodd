@@ -20,7 +20,7 @@ class AbstractIngredient(models.Model):
 
     def __str__(self): return self.name
 
-class Package(models.Model):
+class Product(models.Model):
     ingredient = models.ForeignKey(AbstractIngredient)
     name       = models.CharField(max_length=255)
     uid        = models.IntegerField()
@@ -31,12 +31,12 @@ class Package(models.Model):
     def __str__(self): return self.name
 
 class Stock(models.Model):
-    package   = models.ForeignKey(Package)
+    product   = models.ForeignKey(Product)
     remaining = models.FloatField()
     expiry    = models.DateField(null=True)
 
     def __str__(self): return "%s of %s" % (self.remaining,
-            self.package)
+            self.product)
 
 class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(AbstractIngredient)
