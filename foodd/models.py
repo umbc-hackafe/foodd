@@ -11,7 +11,7 @@ DIMENSIONS = (
 
 class AbstractIngredient(models.Model):
     name           = models.CharField(max_length=255)
-    provides       = models.ManyToManyField("self")
+    provides       = models.ManyToManyField("self", null=True)
     properties     = models.ManyToManyField(Property)
     dimensionality = models.IntegerField(choices=DIMENSIONS)
     details        = models.TextField(null=True)
