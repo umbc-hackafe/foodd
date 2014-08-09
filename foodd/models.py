@@ -21,9 +21,9 @@ class AbstractIngredient(models.Model):
     def __str__(self): return self.name
 
 class Product(models.Model):
+    uid        = models.IntegerField(primary_key=True)
     ingredient = models.ForeignKey(AbstractIngredient)
     name       = models.CharField(max_length=255)
-    uid        = models.IntegerField()
     netamount  = models.FloatField()
     tareamount = models.FloatField(blank=True, default=0)
     details    = models.TextField(blank=True)
