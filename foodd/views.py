@@ -8,14 +8,16 @@ def list_recipes(request):
     return HttpResponse(serializers.serialize("json",
         Recipe.objects.all()), mimetype="application/json")
 
-def add_product(request, uid):
-    if request.method == "POST":
-        # Select an instance of the product based on the uid in the URL.
+def add_product(request, uid=None):
+    print("UID is", uid)
+    product = None
+    if uid:
         try:
             product = Product.objects.get(uid=uid)
         except Product.DoesNotExist:
             product = Product(uid=uid)
 
+    if request.method == "POST":
         # Parse the form as it applies to the product.
         form = ProductForm(request.POST, instance=product)
 
@@ -25,11 +27,6 @@ def add_product(request, uid):
             return HttpResponse('Saved successfully', status=201)
 
         return HttpResponse('Form invalid', status=400)
-
-    try:
-        product = Product.objects.get(uid=uid)
-    except Product.DoesNotExist:
-        product = Product(uid=uid)
 
     return render(request, "edit_product.html", {
         "product": product,
