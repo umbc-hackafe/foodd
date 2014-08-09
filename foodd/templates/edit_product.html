@@ -1,5 +1,5 @@
 <h1>Edit Product</h1>
-<form action="/products/edit/{{ product.uid }}/" method="post">
+<form action="{% url 'Add Product' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit" />
