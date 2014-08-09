@@ -40,7 +40,7 @@ class Stock(models.Model):
 
 class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(AbstractIngredient)
-    properties = models.ManyToManyField(Property, null=True)
+    properties = models.ManyToManyField(Property, null=True, blank=True)
     optional   = models.BooleanField(default=False)
     amount     = models.FloatField()
 
