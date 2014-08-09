@@ -11,9 +11,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^recipes/', views.list_recipes, name="List Recipes"),
-    url(r'^products/edit/(?P<uid>[0-9]+)/?', views.add_product, \
-        name="Edit Product"),
-    url(r'^products/edit/', views.add_product, \
-        name="Add Product")
+    url(r'^add/(?P<kind>[a-z]+)/?', views.edit, name="Add"),
+    url(r'^edit/(?P<kind>[a-z]+)/(?P<key>[0-9]+)/?', views.edit, name="Edit"),
 )

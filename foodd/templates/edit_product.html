@@ -1,5 +1,5 @@
-<h1>Edit Product</h1>
-<form action="{% url 'Add Product' %}" method="post">
+<h1>Editing {{ kind|title }}</h1>
+<form action="{% url 'Add' kind %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit" />
