@@ -38,19 +38,18 @@ class Stock(models.Model):
     def __str__(self): return "%s of %s" % (self.remaining,
             self.package)
 
-class Recipe(models.Model):
-    name            = models.CharField(max_length=255)
-    ingredients     = models.ManyToManyField(AbstractIngredient, through='RecipeIngredient')
-    instructions    = models.TextField(null=True)
-
-    def __str__(self): return self.name
-
 class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(AbstractIngredient)
-    recipe     = models.ForeignKey(Recipe)
     properties = models.ManyToManyField(Property, null=True, blank=True)
     optional   = models.BooleanField(default=False)
     amount     = models.FloatField()
 
     def __str__(self): return "%s of %s" % (self.amount,
             self.ingredient)
+
+class Recipe(models.Model):
+    name            = models.CharField(max_length=255)
+    ingredients     = models.ManyToManyField(RecipeIngredient)
+    instructions    = models.TextField(null=True)
+
+    def __str__(self): return self.name
