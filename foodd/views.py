@@ -37,3 +37,10 @@ def edit(request, kind, key=None):
         "product": item,
         "form":    form(None, instance=item)
         })
+
+def view_recipe(request, recipe_id):
+    recipe = Recipe.objects.get(pk=recipe_id)
+    result = "Recipe: " + recipe.name
+    for ingredient in recipe.ingredients.all():
+        result += "\n" + str(ingredient) + ": " + str(list(str(i) for i in ingredient.find_stocks()))
+    return HttpResponse(result)
