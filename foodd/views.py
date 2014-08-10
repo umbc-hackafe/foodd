@@ -40,7 +40,6 @@ def edit(request, kind, key=None):
 
 def view_recipe(request, recipe_id):
     recipe = Recipe.objects.get(pk=recipe_id)
-    result = "Recipe: " + recipe.name
-    for ingredient in recipe.ingredients.all():
-        result += "\n" + str(ingredient) + ": " + str(list(str(i) for i in ingredient.find_stocks()))
-    return HttpResponse(result)
+    return render(request, "view_recipe.html", {
+        "recipe": recipe
+    })

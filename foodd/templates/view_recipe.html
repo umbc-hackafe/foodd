@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <title>{{ recipe.name }}</title>
+  </head>
+
+  <body>
+    <header><h1>{{ recipe.name }}</h1></header>
+    <h2>Ingredients</h2>
+    <ul>
+      {% for ingredient in recipe.ingredients.all %}
+      <li>
+	{{ ingredient.amount }} units {{ ingredient.ingredient.name }}
+	{% if ingredient.find_stocks %} [X] {% else %} [ ] {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
