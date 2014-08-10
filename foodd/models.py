@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 class Property(models.Model):
     name = models.CharField(max_length=255)
@@ -43,6 +44,12 @@ class RecipeIngredient(models.Model):
     properties = models.ManyToManyField(Property, null=True, blank=True)
     optional   = models.BooleanField(default=False)
     amount     = models.FloatField()
+
+    def find_stocks(self):
+        return Stock.objects.filter(Q(product__ingredient=self.ingredient) |
+                                    Q(product__ingredient__provides=self.ingredient) |
+                                    Q(product__ingredient__properties__in=self.properties.all()) |
+                                    Q(product__ingredient__properties__in=self.ingredient.properties.all()))
 
     def __str__(self): return "%s of %s" % (self.amount,
             self.ingredient)
