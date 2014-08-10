@@ -4,27 +4,19 @@ from django.shortcuts import render
 from foodd.models import *
 from foodd.forms import *
 
+urlmap = {
+        "property": (Property, PropertyForm),
+        "ingredient": (AbstractIngredient, IngredientForm),
+        "product": (Product, ProductForm),
+        "stock": (Stock, StockForm),
+        "recipeingredient": (RecipeIngredient, RecipeIngredientForm),
+        "recipe": (Recipe, RecipeForm)
+        }
+
+
 def edit(request, kind, key=None):
-    kind_class = None
-    form = None
-    if kind == "property":
-        kind_class = Property
-        form = PropertyForm
-    elif kind == "ingredient":
-        kind_class = AbstractIngredient
-        form = AbstractIngredientForm
-    elif kind == "product":
-        kind_class = Product
-        form = ProductForm
-    elif kind == "stock":
-        kind_class = Stock
-        form = StockForm
-    elif kind == "recipeingredient":
-        kind_class = RecipeIngredient
-        form = RecipeIngredientForm
-    elif kind == "recipe":
-        kind_class = Recipe
-        form = RecipeForm
+    if kind in urlmap:
+        kind_class, form = urlmap[kind]
     else:
         return HttpResponse("Page Not Found", status=404)
 
