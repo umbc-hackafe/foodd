@@ -38,6 +38,12 @@ def edit(request, kind, key=None):
         "form":    form(None, instance=item)
         })
 
+def list_recipes(request):
+    recipes = Recipe.objects.all()
+    return render(request, "list_recipes.html", {
+        "recipes": recipes
+        })
+
 def view_recipe(request, recipe_id):
     recipe = Recipe.objects.get(pk=recipe_id)
     return render(request, "view_recipe.html", {
