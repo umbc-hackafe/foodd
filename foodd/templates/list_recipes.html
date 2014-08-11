@@ -17,8 +17,7 @@
             {% else %} [ ]
             {% endif %}
 
-            {{ ingredient.amount }} units
-            {{ ingredient.ingredient.name }}
+            {{ ingredient.short_str }}
           </li>
           {% endfor %}
         </ul>

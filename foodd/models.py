@@ -12,6 +12,8 @@ DIMENSIONS = (
         (2, "Mass")
 )
 
+DIMENSIONS_UNITS = [("", ""), ("Liters", "L"), ("Grams", "g")]
+
 class AbstractIngredient(models.Model):
     name           = models.CharField(max_length=255)
     provides       = models.ManyToManyField("self", null=True, blank=True)
@@ -20,6 +22,9 @@ class AbstractIngredient(models.Model):
     details        = models.TextField(blank=True)
 
     def __str__(self): return self.name
+
+    def long_unit(self): return DIMENSIONS_UNITS[self.dimensionality][0]
+    def short_unit(self): return DIMENSIONS_UNITS[self.dimensionality][1]
 
 class Product(models.Model):
     uid        = models.IntegerField(primary_key=True)
@@ -51,8 +56,13 @@ class RecipeIngredient(models.Model):
                                     Q(product__ingredient__properties__in=self.properties.all()) |
                                     Q(product__ingredient__properties__in=self.ingredient.properties.all()))
 
-    def __str__(self): return "%s of %s" % (self.amount,
-            self.ingredient)
+    def __str__(self): return self.long_str()
+
+    def short_str(self): return "%s%s %s" % (self.amount,
+            self.ingredient.short_unit(), self.ingredient)
+
+    def long_str(self): return "%s %s of %s" % (self.amount,
+            self.ingredient.long_unit(), self.ingredient)
 
 class Recipe(models.Model):
     name            = models.CharField(max_length=255)
