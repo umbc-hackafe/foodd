@@ -60,3 +60,7 @@ class Recipe(models.Model):
     instructions    = models.TextField(blank=True,null=True)
 
     def __str__(self): return self.name
+
+    def has_stocks(self):
+        return all((ingredient.find_stocks() for ingredient in
+            self.ingredients.all()))

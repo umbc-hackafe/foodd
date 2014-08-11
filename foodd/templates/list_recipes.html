@@ -13,7 +13,7 @@
         <ul>
           {% for ingredient in recipe.ingredients.all %}
           <li>
-            {% if ingredient.ingredient.find_stocks %} [X]
+            {% if ingredient.find_stocks %} [X]
             {% else %} [ ]
             {% endif %}
 

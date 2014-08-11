@@ -38,8 +38,13 @@ def edit(request, kind, key=None):
         "form":    form(None, instance=item)
         })
 
-def list_recipes(request):
-    recipes = Recipe.objects.all()
+def list_recipes(request, filter=None):
+    if filter == "stocked":
+        recipes = [recipe for recipe in Recipe.objects.all() if
+                recipe.has_stocks()]
+    else:
+        recipes = Recipe.objects.all()
+
     return render(request, "list_recipes.html", {
         "recipes": recipes
         })
