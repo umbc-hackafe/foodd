@@ -34,7 +34,7 @@ class Product(models.Model):
 class Stock(models.Model):
     product   = models.ForeignKey(Product)
     remaining = models.FloatField()
-    expiry    = models.DateField(null=True)
+    expiry    = models.DateField(blank=True,null=True)
 
     def __str__(self): return "%s of %s" % (self.remaining,
             self.product)
